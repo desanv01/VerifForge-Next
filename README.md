@@ -1,4 +1,4 @@
-<h1 align="center">VerifForge</h1>
+<h1 align="center">VerifForge Next</h1>
 
 <p align="center">
   <strong>Propose the experiment. Check the result.</strong><br />
@@ -6,14 +6,14 @@
 </p>
 
 <p align="center">
-  Built for the <a href="https://cerebralvalley.ai/e/meta-ai-developer-hackathon">Meta Global AI Developer Hackathon 2026</a><br />
+  Continues <a href="https://github.com/desanv01/VerifForge">VerifForge</a>, originally built for the <a href="https://cerebralvalley.ai/e/meta-ai-developer-hackathon">Meta Global AI Developer Hackathon 2026</a><br />
   Push the Frontier · Indie Developer Track · SkyNet / Desan Vasu
 </p>
 
 <p align="center">
   <a href="https://youtu.be/9nSpILaVUCE"><img src="https://img.shields.io/badge/demo-3_minutes-0d9488" alt="Three-minute demo" /></a>
   <img src="https://img.shields.io/badge/Meta-muse--spark--1.3-0d9488" alt="Meta muse-spark-1.3" />
-  <a href="https://github.com/desanv01/VerifForge/actions/workflows/ci.yml"><img src="https://github.com/desanv01/VerifForge/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/desanv01/VerifForge-Next/actions/workflows/ci.yml"><img src="https://github.com/desanv01/VerifForge-Next/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0--only-0d9488" alt="AGPL-3.0-only license" /></a>
 </p>
 
@@ -92,7 +92,9 @@ Follow source-linked summaries to identified hosted runs and preserved result re
 
 ## Demo
 
-**[Watch the three-minute engineering walkthrough on YouTube →](https://youtu.be/9nSpILaVUCE)** · [Demo and evidence guide](docs/project/DEMO.md)
+The demo and evidence below come from the original VerifForge submission.
+
+**[Watch the three-minute engineering walkthrough on YouTube →](https://youtu.be/9nSpILaVUCE)** · [Demo and evidence guide](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/project/DEMO.md)
 
 The film presents retained execution evidence through narrated, authored graphics. It follows two distinct engineering examples:
 
@@ -125,21 +127,21 @@ The film presents retained execution evidence through narrated, authored graphic
 </tr>
 </table>
 
-[Frame provenance →](docs/assets/demo/README.md) · [Meta/FIFO evidence](docs/evidence/planner/2026-11-05/README.md) · [Firmware evidence](docs/evidence/firmware/2026-10-30/README.md)
+[Frame provenance →](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/assets/demo/README.md) · [Meta/FIFO evidence](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/evidence/planner/2026-11-05/README.md) · [Firmware evidence](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/evidence/firmware/2026-10-30/README.md)
 
 ## Get started
 
 ### Explore the recorded results
 
-Start with the [video](https://youtu.be/9nSpILaVUCE) and [evidence guide](docs/project/DEMO.md). Inspecting the public records needs no provider key, paid credits or new simulator run.
+Start with the [video](https://youtu.be/9nSpILaVUCE) and [evidence guide](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/project/DEMO.md). Inspecting the public records needs no provider key, paid credits or new simulator run.
 
 ### Run the local development stack
 
 You'll need **Git**, **Docker Engine with Compose v2** (Linux containers on Windows), and **Node.js 24 / npm** for the web workbench. The container supplies the supported Verilator/cocotb toolchain.
 
 ```sh
-git clone https://github.com/desanv01/VerifForge.git
-cd VerifForge
+git clone https://github.com/desanv01/VerifForge-Next.git
+cd VerifForge-Next
 docker build -t veriforge-rtl:dev -f infra/rtl/Dockerfile .
 docker compose up -d --build
 docker compose ps -a
@@ -169,7 +171,7 @@ The demonstrated planner calls **`muse-spark-1.3` through the Meta Model API** t
 
 The first accepted call produced the executed 17-cycle FIFO stimulus. Its checked observations were imported, independently checked again and persisted. The original bounded followup expired without invoking the provider and was cancelled; a separately authorized actual call then consumed the saved feedback and returned the unexecuted 13-cycle proposal.
 
-The initial experiment reset an empty FIFO and passed its checked scope; it did not expose the known reset defect. The separate firmware correction was hand-authored. [Model identities, lineage and results →](docs/evidence/planner/2026-11-05/README.md)
+The initial experiment reset an empty FIFO and passed its checked scope; it did not expose the known reset defect. The separate firmware correction was hand-authored. [Model identities, lineage and results →](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/evidence/planner/2026-11-05/README.md)
 
 ## Built with
 
@@ -187,25 +189,27 @@ One investigation engine keeps contracts, bounded execution, independent checkin
 
 ## Scope and contributions
 
-Our contribution to the **Meta Global AI Developer Hackathon 2026** is the integration behind the recorded Meta/FIFO feedback chain and firmware/MMIO check/replay path, demonstrated on **4 November** and **30 October**. The deterministic FIFO/platform foundation predates the event; PicoRV32 and execution tools remain upstream work. [Dated contribution ledger →](docs/project/EVENT_CONTRIBUTIONS.md)
+The original VerifForge contribution to the **Meta Global AI Developer Hackathon 2026** is the integration behind the recorded Meta/FIFO feedback chain and firmware/MMIO check/replay path, demonstrated on **4 November** and **30 October**. The deterministic FIFO/platform foundation predates the event; PicoRV32 and execution tools remain upstream work. [Dated contribution ledger →](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/project/EVENT_CONTRIBUTIONS.md)
 
 The demonstration establishes these curated simulation cases and their retained evidence. Full browser/application qualification, broader recovery and clean release reproduction are separate gates; the film is an evidence walkthrough, not a live UI session. [Detailed supported configurations and boundaries →](docs/project/SUPPORT_MATRIX.md)
 
-**Team SkyNet** · **Desan Vasu** · Solo Indie entrant. [Source, tools and attribution →](docs/project/PROVENANCE.md)
+**Team SkyNet** · **Desan Vasu** · Solo Indie entrant. [Source, tools and attribution →](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/project/PROVENANCE.md)
 
 ## Documentation
 
+Follow the [upgrade roadmap](docs/project/UPGRADE_ROADMAP.md) for current qualification work and inherited evidence.
+
 - [Documentation index](docs/project/README.md)
-- [Demo, results and evidence links](docs/project/DEMO.md)
+- [Demo, results and evidence links](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/project/DEMO.md)
 - [Local runtime setup](docs/project/LOCAL_RUNTIME.md) · [RTL execution and replay](docs/project/RTL_TOOLCHAIN.md)
 - [Shared interfaces](docs/project/INTERFACES.md) · [Adapters](docs/project/ADAPTERS.md) · [Evidence](docs/project/EVIDENCE.md)
 - [Meta integration](docs/project/META_INTEGRATION.md) · [Firmware](docs/project/FIRMWARE.md)
-- [Support matrix](docs/project/SUPPORT_MATRIX.md) · [Contribution ledger](docs/project/EVENT_CONTRIBUTIONS.md) · [Provenance](docs/project/PROVENANCE.md)
+- [Support matrix](docs/project/SUPPORT_MATRIX.md) · [Contribution ledger](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/project/EVENT_CONTRIBUTIONS.md) · [Provenance](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/project/PROVENANCE.md)
 
 ## Feedback
 
-Found a problem or have a useful engineering case? [Open an issue](https://github.com/desanv01/VerifForge/issues) with expected behavior, exact stimulus, tool versions and reproducible steps. Use curated or permission-cleared examples; keep credentials and private designs out of public reports. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+Found a problem or have a useful engineering case? [Open an issue](https://github.com/desanv01/VerifForge-Next/issues) with expected behavior, exact stimulus, tool versions and reproducible steps. Use curated or permission-cleared examples; keep credentials and private designs out of public reports. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
 ## License
 
-Original first-party VerifForge code is licensed under **GNU AGPL version 3 only** ([AGPL-3.0-only](LICENSE)), copyright (C) 2026 Desan Vasu. Third-party code, tools, dependencies, hardware designs and assets retain their own rights and notices, including PicoRV32's ISC header and the [Spike BSD-3-Clause notice](targets/riscv/upstream/SPIKE-LICENSE). See [provenance](docs/project/PROVENANCE.md).
+Original first-party VerifForge code is licensed under **GNU AGPL version 3 only** ([AGPL-3.0-only](LICENSE)), copyright (C) 2026 Desan Vasu. Third-party code, tools, dependencies, hardware designs and assets retain their own rights and notices, including PicoRV32's ISC header and the [Spike BSD-3-Clause notice](targets/riscv/upstream/SPIKE-LICENSE). See [provenance](https://github.com/desanv01/VerifForge/blob/5453a5759af8d3529f2226ca9880f46eac618c18/docs/project/PROVENANCE.md).

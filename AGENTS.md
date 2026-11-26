@@ -1,19 +1,19 @@
-# VerifForge implementation
+# VerifForge Next implementation
 
-Latest workflow: direct human approval on 3 November 2026 resumed the hybrid implementation-first plan in `.coordination/hybrid-execution/PLAN.md`. Persistent Sol6.1/medium workers implement Phase A; temporary Sol6.1/high reviewers perform focused checks. Main owns Phase B DeepSeek task packets, acceptance, integration and GitHub. The human confirmed Meta credits and authorized live work; current canonical controls and exact operation scope govern execution. Earlier pause/credits-hold records are historical unless a later human pause supersedes this resume.
+VerifForge Next continues the work published in VerifForge at `5453a5759af8d3529f2226ca9880f46eac618c18`. Use this repository and its new assignments for implementation and integration. The [upgrade roadmap](docs/project/UPGRADE_ROADMAP.md) tracks current work. Read the relevant project documentation and assigned scope before editing.
 
-Read docs/project/IMPLEMENTATION_GAMEPLAN.md and your assigned scope before editing. In the coordinator's local checkout, also read the latest private planning handoff and .coordination/current-state.json. The user authorized implementation and persistent phase worker chats, with no three-worker limit. Human resumed implementation, workers and the existing schedule on 29 October 2026, explicitly superseding the October24 pause. The active coordinator and current controls are recorded in private canonical state; migration archives remain historical.
+Use persistent implementation workers within their assigned scopes and focused GPT-6.2 Sol High review or tests where needed. Computer use belongs to a GPT-6.1 Terra High subagent when available. The main coordinator owns integration, operational acceptance and GitHub. Current successor controls govern runtime and request admission.
 
 ## Coordination
-- Main owns integration, root configuration, shared dependency locks, canonical .coordination/current-state.json, worker-registry.json, and MASTER_CHECKLIST.md unless explicitly delegated.
+- Main owns integration, root configuration, shared dependency locks, project controls and progress tracking unless explicitly delegated.
 - Workers edit only assigned paths. Do not switch branches, commit other workers' files, create workers, deploy, publish, or create schedules.
-- The human explicitly authorized project team assignments, questions, and reports between main and registered workers in the invoked orchestration document. Report a finite delivery to main using send_message_to_thread; write evidence in your own .coordination/deliveries/<task-id>.md.
-- Read current-state.json for later pause controls before starting a new operation. Stop at your task boundary; do not start another phase without assignment.
+- Report changed paths, focused validation, remaining gates and any operation settlement through the assigned team channel and work receipt.
+- Read the current successor assignment and applicable pause controls before starting a new operation. Stop at your task boundary; do not start another phase without assignment.
 - Shared checkout: do not overwrite others' edits. Request shared-interface changes from main.
 - Record actual commands, outcomes, limitations, and changed paths. Never mark mock execution as real simulator/model/Vivado evidence.
 
 ## Product constraints
-- One engineering investigation engine. October29 direction retains sequences 1-6: RTL, real RISC-V, firmware/MMIO, live Vivado, KiCad and independent cross-domain checks. Sequence7 is stretch; broader software sequence8 deferred.
+- One engineering investigation engine. The primary roadmap covers sequences 1–6: RTL, real RISC-V, firmware/MMIO, live Vivado, KiCad and independent cross-domain checks. Sequence 7 is stretch scope. Sequence 8 covers later software adapters.
 - Model proposes typed experiments; independent immutable checker determines verdict. Execution status and design verdict are separate.
 - Preserve exact stimulus, source/checker/contract identity, tool versions, evidence, and failure signature.
 - A timeout is not automatically a design defect. A successful build is not functional correctness.
@@ -23,4 +23,4 @@ Read docs/project/IMPLEMENTATION_GAMEPLAN.md and your assigned scope before edit
 - Use official current documentation for evolving dependencies. Read required relevant skills, especially 12ui before substantial UI creation.
 
 ## Layout and ownership baseline
-Python src layout: src/veriforge/{contracts,core,rtl,api,planner,evidence,vivado}; React in apps/web; HDL in targets/{fifo,arithmetic,axi_lite}; tests mirror component names. Python dependencies owned by contracts/bootstrap worker initially, transferred explicitly afterward. Avoid unnecessary packaging layers.
+Python src layout: src/veriforge/{contracts,core,rtl,api,planner,evidence,vivado}; React in apps/web; HDL in targets/{fifo,arithmetic,axi_lite}; tests mirror component names. Dependency changes require explicit ownership.
