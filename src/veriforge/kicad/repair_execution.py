@@ -10,6 +10,7 @@ from typing import Callable, Protocol
 import json
 import time
 import csv
+import stat
 
 from .facts import MappingRequirement, parse_board
 from .investigation import bind_report, investigate_candidate, ViewEvidence
@@ -87,16 +88,45 @@ class Backend(Protocol):
     def cleanup(self, *, seconds:int) -> dict: ...
 
 
-def _regular_tree(root):
+def _optional_lock_disappeared(root, path, error, observations):
+    """Only the exact optional lock leaf may vanish during a live checkpoint."""
+    lock=root/'project-copy/~carrier.kicad_pro.lck'
+    if path!=lock or error.filename is None or Path(error.filename)!=lock:
+        return False
+    for parent in (root,lock.parent):
+        info=parent.lstat()
+        if not stat.S_ISDIR(info.st_mode) or getattr(info,'st_file_attributes',0)&0x400:
+            raise ValueError('optional lock ancestor changed')
+    try:
+        lock.lstat()
+    except FileNotFoundError as missing:
+        if missing.filename is None or Path(missing.filename)!=lock:
+            raise
+    else:
+        return False
+    if type(observations) is not list or len(observations)>=32:
+        raise ValueError('optional lock observation budget exceeded')
+    observations.append('project-copy/~carrier.kicad_pro.lck')
+    return True
+
+
+def _regular_tree(root, *, live=False, observations=None):
     result={}; total=0
     for p in root.rglob('*'):
-        if p.is_symlink() or getattr(p.lstat(),'st_file_attributes',0)&0x400:
-            raise ValueError('linked attempt artifact')
-        if p.is_file():
-            total+=p.stat().st_size
-            if total>LIMITS['artifact_bytes'] or p.stat().st_size>8*1024**2:
-                raise ValueError('artifact budget exceeded')
-            result[p.relative_to(root).as_posix()]=digest(p.read_bytes())
+        try:
+            info=p.lstat()
+            if stat.S_ISLNK(info.st_mode) or getattr(info,'st_file_attributes',0)&0x400:
+                raise ValueError('linked attempt artifact')
+            if stat.S_ISREG(info.st_mode):
+                total+=info.st_size
+                if total>LIMITS['artifact_bytes'] or info.st_size>8*1024**2:
+                    raise ValueError('artifact budget exceeded')
+                result[p.relative_to(root).as_posix()]=digest(p.read_bytes())
+            elif not stat.S_ISDIR(info.st_mode):
+                raise ValueError('non-regular attempt artifact')
+        except FileNotFoundError as error:
+            if not live or not _optional_lock_disappeared(root,p,error,observations):
+                raise
     return result
 
 
@@ -142,7 +172,8 @@ def execute_candidate(*, root:Path, operation_id:str, original:Bundle, candidate
              'native_execution':'not_run','design_verdict':'inconclusive','physical_electrical_verdict':'inconclusive',
              'original':dict(original.expected),'candidate':dict(candidate.expected),'configuration_sha256':configuration_sha256,
              'staging':{'bytes':staged_bytes,'files':staged_files,'maximum_bytes':STAGING_BYTES,'maximum_files':STAGING_FILES},
-             'review_sha256':review.expected_sha256,'limits':LIMITS,'records':[],'errors':[]}
+             'review_sha256':review.expected_sha256,'limits':LIMITS,'records':[],'errors':[],
+             'transient_lock_observations':[]}
     snapshots=0
     def save():
         nonlocal snapshots
@@ -167,7 +198,7 @@ def execute_candidate(*, root:Path, operation_id:str, original:Bundle, candidate
         protected.pop('receipt.json',None)
         def checkpoint():
             admission()
-            actual=_regular_tree(root)
+            actual=_regular_tree(root,live=True,observations=receipt['transient_lock_observations'])
             if any(actual.get(p)!=h for p,h in protected.items()): raise ValueError('protected workspace changed')
         # Board-side review is required before any command, independent of exports.
         board=parse_board(proposed['carrier.kicad_pcb'])
