@@ -13,3 +13,12 @@ tests/acceptance/fixtures/planner-role-source-review/*.py.txt -text
 # KiCad native backend verifies these reviewed helper bytes before import.
 src/veriforge/kicad/owned_process.py text eol=lf
 src/veriforge/kicad/resource_api.py text eol=lf
+
+# These files are hashed as raw bytes by the Vivado loader and RTL study.
+src/veriforge/vivado/storage.py text eol=lf
+src/veriforge/rtl/oracle.py text eol=lf
+src/veriforge/arithmetic/oracle.py text eol=lf
+src/veriforge/axi_lite/oracle.py text eol=lf
+targets/fifo/fifo.sv text eol=lf
+targets/arithmetic/multiplier.sv text eol=lf
+targets/axi_lite/registers.sv text eol=lf
